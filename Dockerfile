@@ -8,6 +8,9 @@ RUN apt-get update \
   && echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list \
   && apt-get remove -y --purge cmdtest \
   && apt-get update \
+  && apt-get install -y locales \
+  && locale-gen ja_JP.UTF-8 \
+  && echo "export LANG=ja_JP.UTF-8" >> ~/.bashrc \
   && apt-get install -y nodejs yarn g++ make tmux vim git \
   # remove useless files from the current layer
   && rm -rf /var/lib/apt/lists/* \
