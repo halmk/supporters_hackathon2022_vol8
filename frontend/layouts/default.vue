@@ -1,6 +1,13 @@
 <template>
   <v-app dark>
-    <v-navigation-drawer v-model="drawer" :mini-variant="miniVariant" fixed app>
+    <v-navigation-drawer
+      v-model="drawer"
+      :mini-variant="miniVariant"
+      class="grey lighten-5"
+      fixed
+      clipped
+      app
+    >
       <v-list>
         <v-list-item
           v-for="(item, i) in items"
@@ -17,21 +24,23 @@
           </v-list-item-content>
         </v-list-item>
       </v-list>
+      <v-divider></v-divider>
     </v-navigation-drawer>
-    <v-app-bar fixed app>
+    <v-app-bar clipped-left fixed app>
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
       <v-btn icon @click.stop="miniVariant = !miniVariant">
         <v-icon>mdi-{{ `chevron-${miniVariant ? 'right' : 'left'}` }}</v-icon>
       </v-btn>
       <v-toolbar-title>{{ title }}</v-toolbar-title>
       <v-spacer />
+      <AccountButton />
     </v-app-bar>
     <v-main>
       <v-container>
         <Nuxt />
       </v-container>
     </v-main>
-    <v-footer :absolute="!fixed" app>
+    <v-footer app>
       <span>&copy; {{ new Date().getFullYear() }}</span>
     </v-footer>
   </v-app>
@@ -42,21 +51,20 @@ export default {
   name: 'DefaultLayout',
   data() {
     return {
-      drawer: false,
-      fixed: false,
+      drawer: true,
+      miniVariant: false,
       items: [
         {
           icon: 'mdi-apps',
-          title: 'Welcome',
+          title: 'Home',
           to: '/',
         },
         {
-          icon: 'mdi-chart-bubble',
-          title: 'Inspire',
-          to: '/inspire',
+          icon: 'mdi-folder',
+          title: 'Projects',
+          to: '/projects',
         },
       ],
-      miniVariant: false,
       title: 'Vuetify.js',
     }
   },
