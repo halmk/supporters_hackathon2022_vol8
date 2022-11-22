@@ -25,6 +25,7 @@
       </v-btn>
       <v-toolbar-title>{{ title }}</v-toolbar-title>
       <v-spacer />
+      <AccountButton />
     </v-app-bar>
     <v-main>
       <v-container>
