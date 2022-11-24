@@ -2,7 +2,9 @@ version: '3.8'
 
 services:
   app:
-    build: .
+    build:
+      context: .
+      dockerfile: ./Dockerfile
     ports:
       - "3000:3000"
     working_dir: "/home/supporters_hackathon2022_vol8"
@@ -13,6 +15,18 @@ services:
     environment:
       - HOST=0.0.0.0
       - CHOKIDAR_USEPOLLING=true
+  api:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    ports:
+      - "5000:5000"
+    working_dir: "/home/supporters_hackathon2022_vol8"
+    volumes:
+      - "./:/home/supporters_hackathon2022_vol8"
+    tty: true
+    environment:
+      - HOST=0.0.0.0
 volumes:
   node_modules_volume:
 
