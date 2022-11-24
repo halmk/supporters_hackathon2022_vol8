@@ -25,7 +25,6 @@
   </v-form>
 </template>
 <script>
-// import firebase from '@nuxtjs/firebase'
 export default {
   name: 'ProjectCreateForm',
   data: () => ({
@@ -38,9 +37,7 @@ export default {
     submit() {
       console.log('submit')
       const db = this.$fire.firestore
-      console.log('submit')
       const dbProjects = db.collection('projects')
-      console.log('submit')
       const uuid = this.$store.getters['auth/getUserUid']
       console.log(uuid)
       dbProjects
