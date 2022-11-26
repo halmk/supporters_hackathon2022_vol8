@@ -35,6 +35,9 @@ export const actions = {
         commit('setUserUid', user.uid)
         commit('setUserName', user.displayName)
         console.log(user)
+        localStorage.name = user.displayName
+        localStorage.uuid = user.uid
+        console.log(localStorage)
       })
       .catch((error) => {
         const errorCode = error.code
