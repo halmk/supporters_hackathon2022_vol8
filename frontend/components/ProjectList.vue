@@ -24,12 +24,7 @@ export default {
     // projects: Array,
   },
   data: () => ({
-    projects: [
-      {
-        name: 'project1',
-        participants: ['taro', 'hanako'],
-      },
-    ],
+    projects: [],
   }),
   computed: {},
   created: function () {
@@ -46,30 +41,30 @@ export default {
           // テーブル表示
           const project = doc.data().name
           // console.log(project)
-
+          const users = []
           db.collection('participants')
             .where('project', '==', project)
             .get()
             .then((snapshot) => {
               snapshot.forEach((doc2) => {
                 // テーブル表示
-                const usersUuid = doc2.data().userUuid
+                const userUuid = doc2.data().user_uuid
                 // console.log(users_uuid)
-                const users = []
-                for (let i = 0; i < usersUuid.length; i++) {
-                  db.collection('users')
-                    .where('uuid', '==', usersUuid[i])
-                    .get()
-                    .then((userSnapshot) => {
-                      userSnapshot.forEach((doc3) => {
-                        const name = doc3.data().name
-                        // console.log(name)
-                        users.push(name)
-                      })
+
+                db.collection('users')
+                  .where('uuid', '==', userUuid)
+                  .get()
+                  .then((userSnapshot) => {
+                    userSnapshot.forEach((doc3) => {
+                      const name = doc3.data().name
+                      // console.log(name)
+                      users.push(name)
                     })
-                }
-                this.projects.push({ name: project, participants: users })
+                  })
               })
+            })
+            .then(() => {
+              this.projects.push({ name: project, participants: users })
             })
             .catch((error) => {
               // console.log(project)
