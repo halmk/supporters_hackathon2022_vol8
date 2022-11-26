@@ -38,6 +38,10 @@ export const actions = {
         localStorage.name = user.displayName
         localStorage.uuid = user.uid
         console.log(localStorage)
+        const db = this.$fire.firestore
+        db.collection('users').doc(user.uid).set({
+          name: user.displayName,
+        })
       })
       .catch((error) => {
         const errorCode = error.code
