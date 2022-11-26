@@ -3,44 +3,33 @@
     <v-row>
       <v-col cols="12" sm="6">
         <v-text-field
-          v-model="bookmarkURL"
+          v-model="categoryName"
           :rules="nameRules"
-          label="Bookmark URL"
+          label="Category Name"
           required
           dense
         ></v-text-field>
       </v-col>
-      <v-col cols="12" sm="6">
-        <v-btn
-          :disabled="!valid"
-          color="primary"
-          class="mr-4"
-          :loading="loading"
-          @click="submit"
-        >
-          Submit
+      <v-col cols="12" sm="2">
+        <v-btn :disabled="!valid" color="primary" class="mr-4" @click="submit">
+          Add
         </v-btn>
       </v-col>
     </v-row>
   </v-form>
 </template>
-
 <script>
 export default {
-  name: 'BookmarkSubmissionForm',
-  props: {
-    loading: Boolean,
-  },
+  name: 'CategoryCreateForm',
   data: () => ({
-    bookmarkURL: '',
+    categoryName: '',
     valid: false,
     nameRules: [(v) => !!v || 'required'],
   }),
   computed: {},
   methods: {
     submit() {
-      this.$emit('submit', this.bookmarkURL)
-      this.bookmarkURL = ''
+      this.$emit('submit', this.categoryName)
     },
   },
 }

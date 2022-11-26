@@ -19,17 +19,9 @@
 export default {
   name: 'BookmarkCard',
   props: {
-    // bookmark: Array,
+    bookmark: Object,
   },
   data: () => ({
-    bookmark: {
-      url: 'http://example.com',
-      thumbnailURL: 'http://example.com/thumbnail.png',
-      title: 'example.com',
-      content: 'abcdefg',
-      project: 'project1',
-      category: 'frontend',
-    },
     dialog: false,
   }),
   computed: {},
