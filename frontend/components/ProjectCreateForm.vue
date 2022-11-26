@@ -52,13 +52,15 @@ export default {
         })
         .then((ref) => {
           // console.log('Add ID: ', ref.id)
-          db.collection('participants').add({
-            user_uuid: uuid,
-            project: this.projectName,
-          })
+          db.collection('participants')
+            .add({
+              user_uuid: uuid,
+              project: this.projectName,
+            })
+            .then(() => {
+              this.$router.push('/projects/' + this.projectName)
+            })
         })
-
-      this.$router.push('/projects/' + this.projectName)
     },
   },
 }
