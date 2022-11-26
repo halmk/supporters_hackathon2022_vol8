@@ -40,22 +40,26 @@ export default {
   },
   methods: {
     submit() {
-      console.log('submit')
+      // console.log('submit')
       const db = this.$fire.firestore
       const dbProjects = db.collection('projects')
       const uuid = this.$store.getters['auth/getUserUid']
-      console.log(uuid)
+      // console.log(uuid)
       dbProjects
         .add({
           creator_uuid: uuid,
           name: this.projectName,
         })
         .then((ref) => {
-          console.log('Add ID: ', ref.id)
-          db.collection('participants').add({
-            user_uuid: uuid,
-            project: this.projectName,
-          })
+          // console.log('Add ID: ', ref.id)
+          db.collection('participants')
+            .add({
+              user_uuid: uuid,
+              project: this.projectName,
+            })
+            .then(() => {
+              this.$router.push('/projects/' + this.projectName)
+            })
         })
     },
   },
