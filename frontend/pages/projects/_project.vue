@@ -4,13 +4,25 @@
       <v-col cols="12">
         <span class="text-h3">{{ projectName }}</span>
       </v-col>
+      <v-col cols="12" class="mt-2">
+        <CategoryCreateForm @submit="newCategory" />
+        <BookmarkSubmissionForm
+          :loading="submitLoading"
+          @submit="submitBookmark"
+        />
+        <v-row>
+          <v-col cols="12" sm="6">
+            <CategorySelectButton
+              :categories="categories"
+              @input="setCategory"
+            />
+          </v-col>
+        </v-row>
+      </v-col>
       <v-col cols="12">
         <BookmarkList :bookmarks="bookmarks" />
       </v-col>
     </v-row>
-    <v-footer absolute class="grey lighten-5">
-      <BookmarkSubmissionForm />
-    </v-footer>
   </div>
 </template>
 
@@ -19,22 +31,14 @@ export default {
   name: 'ProjectPage',
   data: () => ({
     projectName: '',
-    categories: ['frontend'],
-    bookmarks: [
-      {
-        url: 'http://example.com',
-        thumbnailURL: 'http://example.com/thumbnail.png',
-        title: 'example.com',
-        content: 'abcdefg',
-        project: 'project1',
-        category: 'frontend',
-      },
-    ],
+    categories: ['General'],
+    selectedCategory: 'General',
+    bookmarks: [],
+    submitLoading: false,
   }),
   mounted() {
     this.projectName = this.$route.params.project
     console.log(this.projectName)
   },
-  methods: {},
 }
 </script>
