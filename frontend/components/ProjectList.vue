@@ -52,14 +52,13 @@ export default {
                 // console.log(users_uuid)
 
                 db.collection('users')
-                  .where('uuid', '==', userUuid)
+                  .doc(userUuid)
                   .get()
-                  .then((userSnapshot) => {
-                    userSnapshot.forEach((doc3) => {
-                      const name = doc3.data().name
-                      // console.log(name)
-                      users.push(name)
-                    })
+                  .then((doc) => {
+                    users.push(doc.data().name)
+                  })
+                  .catch((error) => {
+                    console.log(error)
                   })
               })
             })
