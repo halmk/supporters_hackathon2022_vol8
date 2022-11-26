@@ -12,7 +12,7 @@
         </v-col>
         <v-col cols="12">
           <v-btn
-            :disabled="!valid"
+            :disabled="!valid || !loggedIn"
             color="primary"
             class="mr-4"
             @click="submit"
@@ -25,6 +25,7 @@
   </v-form>
 </template>
 <script>
+import { mapGetters } from 'vuex'
 export default {
   name: 'ProjectCreateForm',
   data: () => ({
@@ -32,7 +33,11 @@ export default {
     valid: false,
     nameRules: [(v) => !!v || 'required'],
   }),
-  computed: {},
+  computed: {
+    ...mapGetters({
+      loggedIn: 'auth/isLoggedIn',
+    }),
+  },
   methods: {
     submit() {
       console.log('submit')
