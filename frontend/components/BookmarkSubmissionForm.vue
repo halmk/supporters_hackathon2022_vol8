@@ -38,7 +38,10 @@ export default {
   }),
   computed: {},
   methods: {
-    submit() {},
+    submit() {
+      this.$emit('submit', this.bookmarkURL)
+      this.bookmarkURL = ''
+    },
   },
 }
 </script>
