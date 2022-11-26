@@ -47,6 +47,10 @@ export default {
         })
         .then((ref) => {
           console.log('Add ID: ', ref.id)
+          db.collection('participants').add({
+            user_uuid: uuid,
+            project: this.projectName,
+          })
         })
     },
   },
