@@ -32,6 +32,11 @@ export default {
     // console.log('get')
     const db = this.$fire.firestore
     const uuid = this.$store.getters['auth/getUserUid']
+
+    if (uuid === '' || uuid === undefined) {
+      return
+    }
+
     // データ取得
     db.collection('projects')
       .where('creator_uuid', '==', uuid)
