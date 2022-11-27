@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="grey lighten-4 pa-2">
     <v-row justify="center" align="center">
       <v-col cols="12">
         <span class="text-h3">{{ projectName }}</span>
@@ -37,6 +37,7 @@ export default {
     selectedCategory: 'General',
     bookmarks: [],
     submitLoading: false,
+    unset: null,
   }),
   computed: {
     filteredBookmarks() {
@@ -48,8 +49,8 @@ export default {
   created() {
     this.projectName = this.$route.params.project
     console.log(this.projectName)
-    this.getBookmarks()
-    this.getComments()
+    // this.getBookmarks()
+    this.syncBookmarks()
   },
   methods: {
     async getBookmarks() {
@@ -68,9 +69,14 @@ export default {
           return 1
         }
       })
-      console.log(bookmarks)
-      this.bookmarks = bookmarks
+      console.log('set bookmarks:', bookmarks)
+      this.bookmarks = []
+      for (const bookmark of bookmarks) {
+        this.bookmarks.push(bookmark)
+      }
+      // this.bookmarks = bookmarks
       this.categories = this.categories.concat(this.getCategories())
+      await this.getComments()
     },
 
     async submitBookmark(bookmarkURL) {
@@ -99,7 +105,7 @@ export default {
           title: metadata.title,
           url: bookmarkURL,
         })
-        await this.getBookmarks()
+        // await this.getBookmarks()
       } catch (error) {
         console.log(error)
       }
@@ -126,9 +132,43 @@ export default {
           bookmark.comments = filteredComments
         })
         console.log(this.bookmarks)
+        this.bookmarks.splice()
       } catch (error) {
         console.log(error)
       }
+    },
+
+    syncBookmarks() {
+      // 対象のquery
+      const db = this.$fire.firestore
+      const query = db
+        .collection('bookmarks')
+        .where('project', '==', this.projectName)
+
+      // リッスンの開始
+      this.unset = query.onSnapshot((snapshot) => {
+        snapshot.docChanges().forEach((change) => {
+          // 変更のタイプ
+          console.info(`*** change: type=${change.type}`)
+          // 対象のドキュメント。変更の場合は、変更後
+          console.info(
+            `*** change: data=${JSON.stringify(change.doc.data(), null, 2)}`
+          )
+          // refに対する変更後のindex。削除時は-1
+          console.info(`*** change: newIndex=${change.newIndex}`)
+          // refに対する変更前のindex。追加時は-1
+          console.info(`*** change: oldIndex=${change.oldIndex}`)
+
+          this.getBookmarks()
+          if (change.type === 'added') {
+            // 追加時
+          } else if (change.type === 'modified') {
+            // 変更時
+          } else if (change.type === 'removed') {
+            // 削除時
+          }
+        })
+      })
     },
 
     getCategories() {

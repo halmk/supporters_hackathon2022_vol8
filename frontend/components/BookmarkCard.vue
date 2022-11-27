@@ -1,5 +1,12 @@
 <template>
-  <v-card>
+  <v-card class="">
+    <v-img
+      :src="bookmark.thumbnail_url"
+      max-height="100px"
+      height="100px"
+      contain
+      class="white"
+    ></v-img>
     <v-card-title>
       {{ bookmark.title }}
     </v-card-title>

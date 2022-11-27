@@ -65,7 +65,7 @@ export default {
           to: '/projects',
         },
       ],
-      title: 'Vuetify.js',
+      title: 'TeamBookmarks',
     }
   },
 }
