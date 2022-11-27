@@ -1,18 +1,17 @@
 <template>
-  <v-form v-model="valid">
+  <v-form>
     <v-row>
       <v-col cols="12" sm="6">
         <v-text-field
           v-model="bookmarkURL"
-          :rules="nameRules"
           label="Bookmark URL"
-          required
+          outlined
           dense
         ></v-text-field>
       </v-col>
       <v-col cols="12" sm="6">
         <v-btn
-          :disabled="!valid"
+          :disabled="!bookmarkURL"
           color="primary"
           class="mr-4"
           :loading="loading"
@@ -33,8 +32,6 @@ export default {
   },
   data: () => ({
     bookmarkURL: '',
-    valid: false,
-    nameRules: [(v) => !!v || 'required'],
   }),
   computed: {},
   methods: {
