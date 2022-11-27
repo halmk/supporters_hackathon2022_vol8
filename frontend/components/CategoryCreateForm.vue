@@ -1,17 +1,21 @@
 <template>
-  <v-form v-model="valid">
+  <v-form>
     <v-row>
       <v-col cols="12" sm="6">
         <v-text-field
           v-model="categoryName"
-          :rules="nameRules"
           label="Category Name"
-          required
+          outlined
           dense
         ></v-text-field>
       </v-col>
       <v-col cols="12" sm="2">
-        <v-btn :disabled="!valid" color="primary" class="mr-4" @click="submit">
+        <v-btn
+          :disabled="!categoryName"
+          color="primary"
+          class="mr-4"
+          @click="submit"
+        >
           Add
         </v-btn>
       </v-col>
@@ -23,8 +27,6 @@ export default {
   name: 'CategoryCreateForm',
   data: () => ({
     categoryName: '',
-    valid: false,
-    nameRules: [(v) => !!v || 'required'],
   }),
   computed: {},
   methods: {
