@@ -12,7 +12,15 @@
     <v-card-actions>
       <v-btn text outlined @click="dialog = true">コメント</v-btn>
     </v-card-actions>
-    <CommentDialog :dialog="dialog" @clickOutside="dialog = false" />
+    <CommentDialog
+      :title="bookmark.title"
+      :project="bookmark.project"
+      :url="bookmark.url"
+      :comments="bookmark.comments"
+      :dialog="dialog"
+      @clickOutside="dialog = false"
+      @clickSend="sendComment"
+    />
   </v-card>
 </template>
 <script>
@@ -25,6 +33,26 @@ export default {
     dialog: false,
   }),
   computed: {},
-  methods: {},
+  methods: {
+    async sendComment(comment) {
+      try {
+        // コメントの情報をFirestoreに保存する
+        const db = this.$fire.firestore
+        const userUUID = this.$store.getters['auth/getUserUid']
+        const createdAt = new Date()
+
+        await db.collection('comments').add({
+          comment,
+          category: this.bookmark.category,
+          created_at: createdAt.toISOString(),
+          project: this.bookmark.project,
+          sender_uuid: userUUID,
+          bookmark_url: this.bookmark.url,
+        })
+      } catch (error) {
+        console.log(error)
+      }
+    },
+  },
 }
 </script>
