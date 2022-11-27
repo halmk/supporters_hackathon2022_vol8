@@ -12,7 +12,12 @@
     <v-card-actions>
       <v-btn text outlined @click="dialog = true">コメント</v-btn>
     </v-card-actions>
-    <CommentDialog :dialog="dialog" @clickOutside="dialog = false" />
+    <CommentDialog
+      :title="bookmark.title"
+      :comments="bookmark.comments"
+      :dialog="dialog"
+      @clickOutside="dialog = false"
+    />
   </v-card>
 </template>
 <script>
