@@ -24,7 +24,13 @@ export default {
   },
   methods: {
     login() {
-      this.$store.dispatch('auth/login')
+      this.$store.dispatch('auth/login').then(() => {
+        // console.log(this.$route.name)
+        if (this.$route.name === 'projects') {
+          // console.log(this.$route.name)
+          this.$router.push('/')
+        }
+      })
     },
   },
 }
