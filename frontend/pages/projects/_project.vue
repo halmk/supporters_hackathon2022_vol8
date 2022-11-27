@@ -107,24 +107,28 @@ export default {
     },
 
     async getComments() {
-      // プロジェクトと一致するコメントをfirestoreから取得
-      const db = this.$fire.firestore
-      const snapshot = await db
-        .collection('comments')
-        .where('project', '==', this.projectName)
-        .get()
-      const comments = snapshot.docs.map((doc) => {
-        return doc.data()
-      })
+      try {
+        // プロジェクトと一致するコメントをfirestoreから取得
+        const db = this.$fire.firestore
+        const snapshot = await db
+          .collection('comments')
+          .where('project', '==', this.projectName)
+          .get()
+        const comments = snapshot.docs.map((doc) => {
+          return doc.data()
+        })
 
-      // 一致するbookmarkにcommentsを振り分ける
-      this.bookmarks.forEach((bookmark) => {
-        const filteredComments = comments.filter(
-          (comment) => comment.bookmark_url === bookmark.url
-        )
-        bookmark.comments = filteredComments
-      })
-      console.log(this.bookmarks)
+        // 一致するbookmarkにcommentsを振り分ける
+        this.bookmarks.forEach((bookmark) => {
+          const filteredComments = comments.filter(
+            (comment) => comment.bookmark_url === bookmark.url
+          )
+          bookmark.comments = filteredComments
+        })
+        console.log(this.bookmarks)
+      } catch (error) {
+        console.log(error)
+      }
     },
 
     getCategories() {
