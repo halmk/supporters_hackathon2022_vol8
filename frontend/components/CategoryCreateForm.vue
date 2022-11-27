@@ -32,6 +32,7 @@ export default {
   methods: {
     submit() {
       this.$emit('submit', this.categoryName)
+      this.categoryName = ''
     },
   },
 }
