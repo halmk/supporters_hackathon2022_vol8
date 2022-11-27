@@ -2,6 +2,7 @@ export default function ({ store, route, redirect }) {
   console.log('ミドルウェア')
   store.commit('auth/setUserUid', localStorage.uuid)
   store.commit('auth/setUserName', localStorage.name)
+  store.commit('auth/setUserPhoto', localStorage.photo)
 
   if (route.name === 'projects-project') {
     console.log(route.name)

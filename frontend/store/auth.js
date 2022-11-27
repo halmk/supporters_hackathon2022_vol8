@@ -1,6 +1,7 @@
 export const state = () => ({
   userUid: '',
   userName: '',
+  userPhoto: '',
 })
 export const getters = {
   getUserUid(state) {
@@ -12,6 +13,9 @@ export const getters = {
   isLoggedIn(state) {
     return !!state.userName
   },
+  getUserPhoto(state) {
+    return state.userPhoto
+  },
 }
 
 export const mutations = {
@@ -20,6 +24,9 @@ export const mutations = {
   },
   setUserName(state, userName) {
     state.userName = userName
+  },
+  setUserPhoto(state, userPhoto) {
+    state.userPhoto = userPhoto
   },
 }
 
@@ -34,9 +41,11 @@ export const actions = {
         console.log('success : ' + user.uid + ' : ' + user.displayName)
         commit('setUserUid', user.uid)
         commit('setUserName', user.displayName)
+        commit('setUserPhoto', user.photoURL)
         console.log(user)
         localStorage.name = user.displayName
         localStorage.uuid = user.uid
+        localStorage.photo = user.photoURL
         console.log(localStorage)
         const db = this.$fire.firestore
         db.collection('users').doc(user.uid).set({
@@ -53,5 +62,6 @@ export const actions = {
     this.$fire.auth.signOut()
     commit('setUserUid', '')
     commit('setUserName', '')
+    commit('setUserPhoto', '')
   },
 }
