@@ -83,10 +83,19 @@ export default {
       this.submitLoading = true
       try {
         // APIサーバにURLを送信してメタデータを取得する
-        const apiURL = 'http://localhost:5000/metadata'
-        const params = { url: bookmarkURL }
-        console.log(apiURL, params)
-        const response = await axios.get(apiURL, { params })
+        // const apiURL = `${process.env.API_ENDPOINT}/metadata`
+        const apiURL = `${process.env.API_ENDPOINT}`
+        // const data = "{\"url\": \""+bookmarkURL+"\"}"
+        // console.log(data)
+        // const response = await axios.post(apiURL, data)
+        const response = await axios.post(apiURL, {
+          // data,
+          url: bookmarkURL,
+          // headers: {
+          //   'Content-Type': 'application/json',
+          //   // "Access-Control-Allow-Origin": "*",
+          // },
+        })
         const metadata = response.data
         const createdAt = new Date()
         console.log(metadata)
